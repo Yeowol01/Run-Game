@@ -10,8 +10,9 @@ public enum RoadLine
 }
 
 public class Runner : MonoBehaviour
-{
+{    
     [SerializeField] RoadLine roadLine;
+    [SerializeField] float positionX = 3.5f;
 
     void Start()
     {
@@ -21,32 +22,44 @@ public class Runner : MonoBehaviour
     void Update()
     {
         Move();
+
+        Status();
     }
 
     public void Move()
     {
         if(Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if(roadLine <= RoadLine.LEFT)
-            {
-                roadLine = RoadLine.LEFT;
-            }
-            else
-            {
+            if(roadLine > RoadLine.LEFT)
+            {                
                 roadLine--;
             }
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            if (roadLine >= RoadLine.RIGHT)
-            {
-                roadLine = RoadLine.RIGHT;
-            }
-            else
+            if (roadLine < RoadLine.RIGHT)
             {
                 roadLine++;
             }
         }
+    }
+
+    public void Status()
+    {
+        switch(roadLine)
+        {
+            case RoadLine.LEFT : Movement(-positionX);
+                break;
+            case RoadLine.MIDDLE : Movement(0);
+                break;
+            case RoadLine.RIGHT : Movement(positionX);
+                break;
+        }
+    }
+
+    public void Movement(float positionX)
+    {
+        transform.position = new Vector3(positionX , 0, 0);
     }
 }
