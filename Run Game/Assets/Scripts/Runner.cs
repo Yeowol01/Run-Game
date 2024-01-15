@@ -10,9 +10,15 @@ public enum RoadLine
 }
 
 public class Runner : MonoBehaviour
-{    
+{
     [SerializeField] RoadLine roadLine;
-    [SerializeField] float positionX = 3.5f;
+    [SerializeField] float lerpSpeed = 25.0f;
+    [SerializeField] float positionX = 2.25f;
+
+    private void OnEnable()
+    {
+        InputManager.instance.keyAction += Move;
+    }
 
     void Start()
     {
@@ -21,8 +27,6 @@ public class Runner : MonoBehaviour
 
     void Update()
     {
-        Move();
-
         Status();
     }
 
@@ -60,6 +64,11 @@ public class Runner : MonoBehaviour
 
     public void Movement(float positionX)
     {
-        transform.position = new Vector3(positionX , 0, 0);
+        transform.position = Vector3.Lerp(transform.position, new Vector3(positionX, 0, 0), lerpSpeed * Time.deltaTime);
+    }
+
+    private void OnDisable()
+    {
+        InputManager.instance.keyAction -= Move;
     }
 }
