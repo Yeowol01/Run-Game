@@ -67,6 +67,16 @@ public class Runner : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, new Vector3(positionX, 0, 0), lerpSpeed * Time.deltaTime);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        CollisionObject collisionObject = other.GetComponent<CollisionObject>();
+
+        if(collisionObject != null)
+        {
+            collisionObject.Activate(this);
+        }
+    }
+
     private void OnDisable()
     {
         InputManager.instance.keyAction -= Move;
