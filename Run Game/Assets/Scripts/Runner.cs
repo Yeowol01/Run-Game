@@ -15,13 +15,9 @@ public class Runner : MonoBehaviour
     [SerializeField] float lerpSpeed = 25.0f;
     [SerializeField] float positionX = 2.25f;
 
-    private void OnEnable()
-    {
-        InputManager.instance.keyAction += Move;
-    }
-
     void Start()
     {
+        InputManager.instance.keyAction += Move;
         roadLine = RoadLine.MIDDLE;
     }
 
